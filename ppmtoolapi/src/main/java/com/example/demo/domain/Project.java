@@ -1,55 +1,50 @@
 package com.example.demo.domain;
 
-
-
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.metamodel.StaticMetamodel;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-/**
- * This is the domain class that will be representing the project detail and
- * will be responsible as a data traveler object
- * 
- * @author sharma.pankaj
- *
- */
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Project {
-
+public class Project
+{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank(message = "projectName is Required")
+	@NotBlank(message = "Project name is required")
 	private String projectName;
-	@NotBlank(message = "projectIdentifier is Required")
-	@Size(min = 4,max = 5,message = "Please use 4 to 5 characters")
-	@Column(updatable = false,unique = true)
+	@NotBlank(message="Project Identifier is required")
+	@Column(updatable = false,unique=true)
+	@Size(min=4,max=5,message = "Please use 4 to 5 characters")
 	private String projectIdentifier;
-	@NotBlank(message = "description is Required")
-	private String description;
+	@NotBlank(message = "Description is required")
+    private String description;
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date start_date;
+ 	private Date start_date;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date end_date;
-
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date created_At;
+	private Date created_at;
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date updated_At;
-	public Project() {
-		super();
-	}
+	private Date updated_at;
+	@OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="project")
+	@JsonIgnore
+	private Backlog backlog;
 	public Long getId() {
 		return id;
 	}
@@ -86,27 +81,32 @@ public class Project {
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
-	public Date getCreated_At() {
-		return created_At;
+	public Date getCreated_at() {
+		return created_at;
 	}
-	public void setCreated_At(Date created_At) {
-		this.created_At = created_At;
+	public void setCreated_at(Date created_at) {
+		this.created_at = created_at;
 	}
-	public Date getUpdated_At() {
-		return updated_At;
+	public Date getUpdated_at() {
+		return updated_at;
 	}
-	public void setUpdated_At(Date updated_At) {
-		this.updated_At = updated_At;
+	public void setUpdated_at(Date updated_at) {
+		this.updated_at = updated_at;
 	}
-	
+	public Backlog getBacklog() {
+		return backlog;
+	}
+	public void setBacklog(Backlog backlog) {
+		this.backlog = backlog;
+	}
 	@PrePersist
-    protected void onCreate(){
-        this.created_At = new Date();
-    }
-
-    @PreUpdate
-    protected void onUpdate(){
-        this.updated_At = new Date();
-    }
-
+	public void onCreate()
+	{
+		this.created_at=new Date();
+	}
+	@PreUpdate
+	public void onUpdate()
+	{
+		this.updated_at=new Date();
+	}
 }
