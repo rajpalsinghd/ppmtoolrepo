@@ -40,7 +40,7 @@ public class ProjectTask {
 	
 	
 	@Column(updatable = false)
-	private String projectIdentifer;
+	private String projectIdentifier;
 	private Date create_At;
 	private Date update_At;
 
@@ -105,11 +105,11 @@ public class ProjectTask {
 	}
 
 	public String getProjectIdentifer() {
-		return projectIdentifer;
+		return projectIdentifier;
 	}
 
 	public void setProjectIdentifer(String projectIdentifer) {
-		this.projectIdentifer = projectIdentifer;
+		this.projectIdentifier = projectIdentifer;
 	}
 
 	public Date getCreate_At() {
@@ -151,7 +151,7 @@ public class ProjectTask {
 	public String toString() {
 		return "ProjectTask [id=" + id + ", projectSequence=" + projectSequence + ", summary=" + summary
 				+ ", acceptanceCriteria=" + acceptanceCriteria + ", status=" + status + ", priority=" + priority
-				+ ", dueDate=" + dueDate + ", projectIdentifer=" + projectIdentifer + ", create_At=" + create_At
+				+ ", dueDate=" + dueDate + ", projectIdentifer=" + projectIdentifier + ", create_At=" + create_At
 				+ ", update_At=" + update_At + "]";
 	}
 
